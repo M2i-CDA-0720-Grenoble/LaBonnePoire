@@ -28,13 +28,13 @@ class Message
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=userProfile::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=UserProfile::class, inversedBy="senderMessages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $senderUserProfile;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UserProfile::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=UserProfile::class, inversedBy="recipientMessages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $recipientUserProfile;
@@ -68,14 +68,14 @@ class Message
         return $this;
     }
 
-    public function getSenderUserProfile(): ?userProfile
+    public function getSenderUserProfile(): ?UserProfile
     {
         return $this->senderUserProfile;
     }
 
-    public function setSenderUserProfile(?userProfile $senderUserProfile): self
+    public function setSenderUserProfile(?UserProfile $senderUserProfile): self
     {
-        $this->userProfile = $senderUserProfile;
+        $this->senderUserProfile = $senderUserProfile;
 
         return $this;
     }

@@ -55,6 +55,12 @@ class UserProfile
      */
     private $recipientMessages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city;
+
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
@@ -197,6 +203,18 @@ class UserProfile
                 $recipientMessage->setRecipientUserProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }

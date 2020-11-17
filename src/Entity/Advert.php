@@ -45,6 +45,18 @@ class Advert
      */
     private $userProfile;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SubCategories::class, inversedBy="advert")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $subCategories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city;
+
     public function __construct()
     {
         $this->advertPhotos = new ArrayCollection();
@@ -129,6 +141,30 @@ class Advert
     public function setUserProfile(?UserProfile $userProfile): self
     {
         $this->userProfile = $userProfile;
+
+        return $this;
+    }
+
+    public function getSubCategories(): ?SubCategories
+    {
+        return $this->subCategories;
+    }
+
+    public function setSubCategories(?SubCategories $subCategories): self
+    {
+        $this->subCategories = $subCategories;
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }
