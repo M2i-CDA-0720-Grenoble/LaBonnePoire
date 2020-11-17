@@ -16,7 +16,7 @@ class AdvertController extends AbstractController {
    */
   public function index(AdvertRepository $repo) {
 
-    return $this->render('default/index.html.twig',
+    return $this->render('advert/index.html.twig',
   [
     'adverts'=> $repo->findAll()
   ]);
