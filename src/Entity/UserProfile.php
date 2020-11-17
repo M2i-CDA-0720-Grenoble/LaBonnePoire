@@ -45,9 +45,27 @@ class UserProfile
      */
     private $adverts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="senderUserProfile", orphanRemoval=true)
+     */
+    private $senderMessages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="recipientUserProfile", orphanRemoval=true)
+     */
+    private $recipientMessages;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city;
+
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
+        $this->senderMessages = new ArrayCollection();
+        $this->recipientMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,8 +135,6 @@ class UserProfile
             $this->adverts[] = $advert;
             $advert->setUserProfile($this);
         }
-
-        return $this;
     }
 
     public function removeAdvert(Advert $advert): self
@@ -129,6 +145,76 @@ class UserProfile
                 $advert->setUserProfile(null);
             }
         }
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getSenderMessages(): Collection
+    {
+        return $this->senderMessages;
+    }
+
+    public function addSenderMessage(Message $senderMessage): self
+    {
+        if (!$this->senderMessages->contains($senderMessage)) {
+            $this->senderMessages[] = $senderMessage;
+            $senderMessage->setSenderUserProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSenderMessage(Message $senderMessage): self
+    {
+        if ($this->senderMessages->removeElement($senderMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($senderMessage->getSenderUserProfile() === $this) {
+                $senderMessage->setSenderUserProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getRecipientMessages(): Collection
+    {
+        return $this->recipientMessages;
+    }
+
+    public function addRecipientMessage(Message $recipientMessage): self
+    {
+        if (!$this->recipientMessages->contains($recipientMessage)) {
+            $this->recipientMessages[] = $recipientMessage;
+            $recipientMessage->setRecipientUserProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipientMessage(Message $recipientMessage): self
+    {
+        if ($this->recipientMessages->removeElement($recipientMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($recipientMessage->getRecipientUserProfile() === $this) {
+                $recipientMessage->setRecipientUserProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }
