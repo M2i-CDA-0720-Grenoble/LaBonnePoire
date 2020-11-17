@@ -39,6 +39,12 @@ class Advert
      */
     private $advertPhotos;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=UserProfile::class, inversedBy="adverts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userProfile;
+
     public function __construct()
     {
         $this->advertPhotos = new ArrayCollection();
@@ -111,6 +117,18 @@ class Advert
                 $advertPhoto->setAdvert(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserProfile(): ?UserProfile
+    {
+        return $this->userProfile;
+    }
+
+    public function setUserProfile(?UserProfile $userProfile): self
+    {
+        $this->userProfile = $userProfile;
 
         return $this;
     }
