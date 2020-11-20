@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use AdvertType;
 use App\Entity\Advert;
 use App\Repository\AdvertRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/advert")
@@ -20,6 +23,42 @@ class AdvertController extends AbstractController {
   [
     'adverts'=> $repo->findAll()
   ]);
+  }
+
+   /**
+     * @Route("/filter", name="advert_filter", methods={"GET"})
+     */
+    public function advertForm(): Response
+    {
+        $form = $this->createForm(AdvertType::class);
+
+        return $this->render('advert/filter.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/filter", name="filtered_adverts", methods={"POST"})
+     */
+    public function filter(Request $request, AdvertRepository $repository): Response
+    {
+        $form = $this->createForm(AdvertType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $city=$data['city'];
+            $cat=$data['subCategory'];
+            $adverts = $repository->findByOneCat($cat, $city);
+            
+        }
+            
+
+            
+        return $this->render('advert/filteredAdverts.html.twig', [
+            'adverts' => $adverts,
+        ]);
+    
   }
   
   /**

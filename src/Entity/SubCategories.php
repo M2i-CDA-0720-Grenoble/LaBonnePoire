@@ -30,6 +30,11 @@ class SubCategories
      */
     private $advert;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
     public function __construct()
     {
         $this->advert = new ArrayCollection();
@@ -78,6 +83,18 @@ class SubCategories
                 $advert->setSubCategories(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
