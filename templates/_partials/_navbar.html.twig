@@ -1,6 +1,6 @@
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color-dark">
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color align-items-end">
     <a class="navbar-brand text-center" href="{{ path('homepage') }}">
-        <img class="d-block" src="{{ asset('images/pear.png') }}" height="30" alt="La bonne poire logo">
+        <img src="{{ asset('images/pear.png') }}" height="30" alt="La bonne poire logo">
         <span class="text-white">La Bonne Poire</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
@@ -8,7 +8,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto nav md-tabs teal darken-1 mx-0 mb-0 mt-1">
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('advert') }}">Les annonces</a>
             </li>
