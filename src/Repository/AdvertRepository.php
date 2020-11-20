@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Advert;
+use App\Entity\Categories;
+use App\Entity\City;
+use App\Entity\SubCategories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,6 +21,17 @@ class AdvertRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Advert::class);
     }
+
+    public function findByOneCat(SubCategories $cat, City $city)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.subCategories = :cat') 
+            ->setParameter('cat', $cat) 
+            ->getQuery() 
+            ->getResult()
+        ;
+    }
+
 
     // /**
     //  * @return Advert[] Returns an array of Advert objects
@@ -47,4 +61,6 @@ class AdvertRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    
 }
