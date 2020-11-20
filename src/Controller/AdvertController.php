@@ -67,7 +67,7 @@ class AdvertController extends AbstractController {
   public function show(Advert $advert) {
     
    //    $advert = $this->getDoctrine()->getRepository(Advert::class)->find($id);
-      return $this->render('default/show.html.twig',['advert'=>$advert] );
+      return $this->render('advert/show.html.twig',['advert'=>$advert] );
   
   }
 }
